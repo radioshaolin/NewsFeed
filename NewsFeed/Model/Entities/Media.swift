@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Source {
+struct Media {
     let sourceId: String
     let name: String
     let description: String
@@ -18,7 +18,7 @@ struct Source {
     let sortBysAvailable: [String]
 }
 
-extension Source {
+extension Media {
     struct Key  {
         static let sourceId = "id"
         static let name = "name"
@@ -47,7 +47,3 @@ extension Source {
         self.sortBysAvailable = sortBysAvailable
     }
 }
-
-
-
-

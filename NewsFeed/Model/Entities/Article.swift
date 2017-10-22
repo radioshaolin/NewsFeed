@@ -43,3 +43,4 @@ extension Article {
         self.publishedAt = publishedAt
     }
 }
+

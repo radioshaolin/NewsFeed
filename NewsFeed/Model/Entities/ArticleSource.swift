@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct ArticleSource {
+struct ArticlesSource {
     let status: String
     let sourceId: String
     let sortBy: String
     let articles: [Article]
 }
 
-extension ArticleSource {
+extension ArticlesSource {
     struct Key  {
         static let status = "status"
         static let sourceId = "source"
@@ -35,3 +35,4 @@ extension ArticleSource {
         self.articles = articles
     }
 }
+

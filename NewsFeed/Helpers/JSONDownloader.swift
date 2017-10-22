@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSONDownloader {
+class JSONDownloader {
     typealias JSON = [String: AnyObject]
     typealias JSONTaskCompletionHandler = (Result<JSON>) -> ()
     
@@ -19,7 +19,7 @@ struct JSONDownloader {
         self.session = URLSession(configuration: configuration)
     }
     
-    init() {
+    convenience init() {
         self.init(configuration: .default)
     }
     
@@ -27,25 +27,25 @@ struct JSONDownloader {
         
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.Error(.requestFailed))
+                completion(.error(.requestFailed))
                 return
             }
-            if httpResponse.statusCode == 200 {
+            if 200 ... 299 ~= httpResponse.statusCode {
                 if let data = data {
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data, options: []) as? JSON {
-                            DispatchQueue.main.async {
-                                completion(.Success(json))
+                            DispatchQueue.global(qos: .userInteractive).async {
+                                completion(.success(json))
                             }
                         }
                     } catch {
-                        completion(.Error(.jsonConversionFailure))
+                        completion(.error(.jsonConversionFailure))
                     }
                 } else {
-                    completion(.Error(.invalidData))
+                    completion(.error(.invalidData))
                 }
             } else {
-                completion(.Error(.responseUnsuccessful))
+                completion(.error(.responseUnsuccessful))
             }
         }
         return task

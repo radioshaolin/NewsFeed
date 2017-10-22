@@ -15,5 +15,8 @@ enum NewsApiError: Error {
     case responseUnsuccessful
     case invalidURL
     case jsonParsingFailure
+    case failureToGetDataInModel
 }
+
+
 

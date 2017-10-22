@@ -1,5 +1,5 @@
 //
-//  SourceService.swift
+//  MediaFetchService.swift
 //  NewsFeed
 //
 //  Created by radioshaolin on 17.10.17.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct SourceService: Gettable {
-    //the associated type is inferred by <[Source?]>
-    typealias SourcesCompletionHandler = (Result<[Source?]>) -> ()
+class MediaFetchService: Gettable {
+    //the associated type is inferred by <[Media?]>
+    typealias MediaCompletionHandler = (Result<[Media?]>) -> ()
     
     private let downloader: JSONDownloader
     private var apiUrl: String {
@@ -24,30 +24,30 @@ struct SourceService: Gettable {
     }
     
     //protocol required function
-    func get(completion: @escaping SourcesCompletionHandler) {
+    func get(completion: @escaping MediaCompletionHandler) {
         
         guard let url = URL(string: self.apiUrl) else {
-            completion(.Error(.invalidURL))
+            completion(.error(.invalidURL))
             return
         }
         //using the JSONDownloader function
-        let request = URLRequest(url: url)
+        let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 5.0)
         let task = downloader.jsonTask(with: request) { (result) in
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 switch result {
-                case .Error(let error):
-                    completion(.Error(error))
+                case .error(let error):
+                    completion(.error(error))
                     return
-                case .Success(let json):
+                case .success(let json):
                     //parsing the Json response
-                    guard let sourcesJSONFeed = json["sources"] as? [[String: AnyObject]]
+                    guard let mediaJSONFeed = json["sources"] as? [[String: AnyObject]]
                     else {
-                            completion(.Error(.jsonParsingFailure))
+                            completion(.error(.jsonParsingFailure))
                             return
                     }
                     //maping the array and create Source objects
-                    let sourceArray = sourcesJSONFeed.map { rawSource in Source(json: rawSource)}
-                    completion(.Success(sourceArray))
+                    let mediaArray = mediaJSONFeed.map { rawSource in Media(json: rawSource)}
+                    completion(.success(mediaArray))
                 }
             }
         }

@@ -6,10 +6,11 @@
 //  Copyright © 2017 Radio Shaolin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class SourceCell: UITableViewCell {
+class MediaCell: UITableViewCell {
+    
+    static let cellId = "mediaCellID"
     
     let sourceNameLabel: UILabel = {
         let l = UILabel()
@@ -40,7 +41,7 @@ class SourceCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func displaySourceInCell(using viewModel: SourceViewModel) {
+    func displayMediaInCell(using viewModel: MediaViewModel) {
         sourceNameLabel.text = viewModel.name
         descriptionLabel.text = viewModel.description
     }
@@ -55,7 +56,7 @@ class SourceCell: UITableViewCell {
         sourceNameLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         sourceNameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         sourceNameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-    
+        
         addSubview(descriptionLabel)
         descriptionLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: sourceNameLabel.bottomAnchor, constant: 5).isActive = true

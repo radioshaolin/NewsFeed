@@ -23,7 +23,7 @@ class ArticleVC: UIViewController, UIWebViewDelegate {
         aiv.color = .black
         return aiv
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(webView)
@@ -34,10 +34,10 @@ class ArticleVC: UIViewController, UIWebViewDelegate {
     }
     
     func pageLoad(url: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .default).async {
             let url = URL(string: self.url)
             if let unwrappedURL = url {
-                let request = URLRequest(url: unwrappedURL, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 30.0)
+                let request = URLRequest(url: unwrappedURL, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 5.0)
                 let session = URLSession.shared
                 let task = session.dataTask(with: request) { (data, response, error) in
                     if error == nil {
@@ -61,9 +61,10 @@ class ArticleVC: UIViewController, UIWebViewDelegate {
     func webViewDidStartLoad(_ webView: UIWebView) {
         activityIndicatorView.startAnimating()
     }
-
+    
     func webViewDidFinishLoad(_ webView: UIWebView) {
         activityIndicatorView.stopAnimating()
     }
     
 }
+

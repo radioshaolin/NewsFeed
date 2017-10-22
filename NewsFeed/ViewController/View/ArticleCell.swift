@@ -11,6 +11,8 @@ import UIKit
 
 class ArticleCell: UITableViewCell {
     
+    static let cellId = "articleCellId"
+    
     let articleImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -85,7 +87,7 @@ class ArticleCell: UITableViewCell {
         titleLabel.leftAnchor.constraint(equalTo: articleImage.rightAnchor, constant: 10).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-
+        
         
         addSubview(authorLabel)
         authorLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor).isActive = true

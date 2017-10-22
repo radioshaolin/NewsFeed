@@ -9,7 +9,7 @@
 import Foundation
 
 enum Result<T> {
-    case Success(T)
-    case Error(NewsApiError)
+    case success(T)
+    case error(NewsApiError)
 }
 

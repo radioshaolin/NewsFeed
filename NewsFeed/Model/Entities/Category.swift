@@ -46,5 +46,5 @@ enum Category: Int {
             }
         }
     }
-    
 }
+
