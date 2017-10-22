@@ -14,4 +14,3 @@ Requirements:
 ## How to use:
 
 * Project was made with Xcode9 and Swift ver 4 for iOS 11
-* just: `open NewsFeed.xcodeproj/`
